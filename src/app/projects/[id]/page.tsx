@@ -3,9 +3,10 @@
 import { useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
-import {  Flex, Timeline, Typography, Tag, Space, DatePicker } from "antd";
-import type { Commit } from "@/types/commit";
+import {  Flex, Timeline, Typography, Tag, Space, DatePicker, Select } from "antd";
+import type { Commit,Branch } from "@/types/project";
 import dayjs from "dayjs";
+import { useOptions } from "./useOptions";
 
 export default function ProjectDetailPage() {
   const params = useParams<{ id: string }>();
@@ -20,10 +21,14 @@ export default function ProjectDetailPage() {
     },
     enabled: Boolean(projectId),
   });
+  
+  const { options } = useOptions(projectId);
+
+ 
 
   const [startAt, setStartAt] = useState<dayjs.Dayjs | null>(null);
   const [endAt, setEndAt] = useState<dayjs.Dayjs | null>(null);
-
+  const [branch, setBranch] = useState<string | null>(null);
   const filteredCommits = useMemo(() => {
     if (!commits) return [] as Commit[];
     let result = commits;
@@ -58,6 +63,8 @@ export default function ProjectDetailPage() {
               }}
               style={{ width: 520 }}
             />
+
+          
           </Flex>
         </Flex>
 
@@ -79,9 +86,9 @@ export default function ProjectDetailPage() {
                     : "blue",
                 children: (
                 <Space direction="horizontal" className="w-full justify-between">
-                  <Space>
+                  <Space style={{ columnGap:'15px'}}>
                   <Typography.Text type="secondary">{dayjs(c.committedAt).format("YYYY-MM-DD HH:mm")}</Typography.Text>
-                  <Space direction="vertical" size={0}>
+                  <Space direction="vertical" size={0} className="align-start">
                     <Typography.Text>{c.message}</Typography.Text>
                     <Typography.Text type="secondary">
                       {c.author} • {c.hash}

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import type { Commit } from "@/types/commit";
+import type { Commit } from "@/types/project";
 
 function generateMockCommits(projectId: string): Commit[] {
   const now = Date.now();

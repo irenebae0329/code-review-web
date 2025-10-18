@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Card, Flex, Typography } from "antd";
+import { Card, Flex, Tooltip, Typography } from "antd";
 import type { Project } from "@/types/project";
 import Link from "next/link";
 import dayjs from "dayjs";
@@ -19,7 +19,11 @@ export default function ProjectCard({ project, onClick }: ProjectCardProps) {
       onClick={() => onClick?.(project)}
       title={
         <Flex align="center" justify="space-between">
-          <Typography.Text strong>{project.name}</Typography.Text>
+          <Typography.Text strong className="max-w-[50%] overflow-hidden text-ellipsis whitespace-nowrap">
+            <Tooltip title={project.name}>
+              {project.name}
+            </Tooltip>
+          </Typography.Text>
           <Link href={`/projects/${project.id}`}>{"view github page"}</Link>
         </Flex>
       }
