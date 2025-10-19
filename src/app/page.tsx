@@ -10,7 +10,7 @@ export default function Home() {
   const { data, isLoading } = useQuery<Project[]>({
     queryKey: ["projects"],
     queryFn: async () => {
-      const res = await fetch("/api/projects");
+      const res = await fetch("/api/nextjs/projects");
       if (!res.ok) throw new Error("Failed to fetch projects");
       return res.json();
     },

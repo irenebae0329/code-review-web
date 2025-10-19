@@ -5,7 +5,7 @@ export function useOptions(projectId: string) {
     const { data: branches } = useQuery<Branch[]>({
         queryKey: ["branches", projectId],
         queryFn: async () => {
-          const res = await fetch(`/api/projects/${projectId}/branches`, {
+          const res = await fetch(`/api/nextjs/projects/${projectId}/branches`, {
             method: "POST",
             body: JSON.stringify({ repoName: projectId }),
           });

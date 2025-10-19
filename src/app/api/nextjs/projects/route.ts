@@ -42,7 +42,6 @@ export async function GET() {
     return res.json();
   };
 
-  try {
     const token = await getAccessTokenFromSession();
     if (!token) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -57,11 +56,7 @@ export async function GET() {
       status: r.archived ? "archived" : r.private ? "paused" : "active",
       updatedAt: r.updated_at,
     }));
-
     return NextResponse.json(projects);
-  } catch (e: unknown) {
-    return NextResponse.json({ error: e.message || "error" }, { status: 500 });
-  }
 }
 
 

@@ -3,10 +3,10 @@
 import { useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
-import {  Flex, Timeline, Typography, Tag, Space, DatePicker, } from "antd";
+import {  Flex, Timeline, Typography, Tag, Space, DatePicker } from "antd";
 import type { Commit} from "@/types/project";
 import dayjs from "dayjs";
-import { useOptions } from "./useOptions";
+// import { useOptions } from "./useOptions";
 
 export default function ProjectDetailPage() {
   const params = useParams<{ id: string }>();
@@ -22,13 +22,13 @@ export default function ProjectDetailPage() {
     enabled: Boolean(projectId),
   });
   
-  const { options } = useOptions(projectId);
+  // const { options } = useOptions(projectId);
 
  
 
   const [startAt, setStartAt] = useState<dayjs.Dayjs | null>(null);
   const [endAt, setEndAt] = useState<dayjs.Dayjs | null>(null);
-  const [branch, setBranch] = useState<string | null>(null);
+  // const [branch, setBranch] = useState<string | null>(null);
   const filteredCommits = useMemo(() => {
     if (!commits) return [] as Commit[];
     let result = commits;
@@ -121,5 +121,3 @@ export default function ProjectDetailPage() {
     </div>
   );
 }
-
-
