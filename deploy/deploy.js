@@ -2,17 +2,26 @@
 import { NodeSSH } from 'node-ssh';
 import archiver from 'archiver';
 import fs from 'fs';
+import dotenv from 'dotenv';
+
+dotenv.config({
+  path:'.env.production'
+})
 
 const ssh = new NodeSSH();
 
+console.log(process.env.HOST,process.env.USERNAME)
 // === 部署配置 ===
 const config = {
-  host: '39.97.170.225',
-  username: 'root',
-  remoteDir: '~/',  // 服务器部署目录
-  deployTmp: '~/',    // 临时上传目录
-  password:'2323232Asd!'
+  host: process.env.HOST,
+  username: process.env.USERNAME,
+  remoteDir: '/root/ai-review-web',  // 服务器部署目录
+  deployTmp: '/root',
+  privateKey:String(fs.readFileSync("/Users/wendi.li/.ssh/id_rsa")),    // 临时上传目录
+  password:process.env.PASSWORD,
+  appName: 'ai-review-web'
 };
+
 
 // === 1️⃣ 本地构建 ===
 async function build() {
@@ -33,7 +42,7 @@ async function zipBuild() {
   archive.file('package.json', { name: 'package.json' });
   archive.file('pnpm-lock.yaml', { name: 'pnpm-lock.yaml' });
   archive.file('next.config.js', { name: 'next.config.js' });
-
+  archive.file('.env.production', { name: '.env.production' });
   await archive.finalize();
 }
 
@@ -44,6 +53,7 @@ async function deploy() {
     host: config.host,
     username: config.username,
     passphrase: config.password,
+    privateKey: config.privateKey,
   });
 
   console.log('📤 上传中...');
@@ -54,7 +64,8 @@ async function deploy() {
     `cd ${config.deployTmp}`,
     `unzip -o next-build.zip -d ${config.remoteDir}`,
     `cd ${config.remoteDir}`,
-    `pm2 reload next-app || pm2 start npm --name "next-app" -- run start`,
+    'pnpm install --production',
+    `pm2 reload ${config.appName} || pm2 start npm --name "${config.appName}" -- run start`,
     `pm2 save`,
   ];
   await ssh.execCommand(commands.join(' && '));
