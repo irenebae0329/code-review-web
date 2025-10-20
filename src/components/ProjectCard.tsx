@@ -31,9 +31,11 @@ export default function ProjectCard({ project, onClick }: ProjectCardProps) {
         height:'200px'
       }}
     >
-      <Flex vertical gap={8}>
-        <Typography.Paragraph style={{ marginBottom: 0 }}>
-          {project.description}
+      <Flex vertical gap={8} justify='space-between'  style={ {
+        height:'100px',
+      }}>
+        <Typography.Paragraph style={{ marginBottom: 0,flex:1,maxHeight:'60%',overflow:'scroll' }}>
+            {project.description}
         </Typography.Paragraph>
         <Typography.Text type="secondary">
           最近更新：{dayjs(project.updatedAt).format("YYYY-MM-DD HH:mm")}

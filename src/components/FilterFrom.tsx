@@ -5,7 +5,7 @@ const filterFormSchema = z.object({
     dateRange: z.array(z.date()),
     projectId: z.string(),
   });
-export function FilterFrom( {onSubmit}: {onSubmit: (values: z.infer<typeof filterFormSchema>) => void}) {
+export function FilterFrom( {}: {onSubmit: (values: z.infer<typeof filterFormSchema>) => void}) {
   
   const filterForm = Form.useFormInstance<z.infer<typeof filterFormSchema>>();
   const [form] = Form.useForm();
