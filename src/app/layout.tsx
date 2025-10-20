@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import Providers from "./providers";
+import AppShell from "@/components/AppShell";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,12 +30,9 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <AntdRegistry>
           <Providers>
-            <div className="w-full flex justify-center">
-              <div className="w-full max-w-6xl flex items-center justify-between mt-4">
-                <div />
-              </div>
-            </div>
-            {children}
+            <AppShell>
+              {children}
+            </AppShell>
           </Providers>
         </AntdRegistry>
       </body>
