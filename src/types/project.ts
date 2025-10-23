@@ -4,6 +4,12 @@ export type Project = {
   name: string;
   description: string;
   updatedAt: string; // ISO string
+  status?: "success" | "warning" | "error" | "processing" | "default" | "archived" | "paused" | "active";
+  hasConfiged?: boolean; // whether configured as ai-coding project
+  owner?: string; // GitHub owner
+  repo?: string; // GitHub repo name
+  repoUrl?: string; // GitHub repository URL
+  webhookSettingsUrl?: string; // GitHub webhook settings URL
 };
 
 
