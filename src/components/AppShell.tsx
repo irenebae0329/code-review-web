@@ -1,43 +1,69 @@
 "use client";
 
 import React from "react";
-import { Layout, Grid } from "antd";
+import { Layout,  theme, Breadcrumb, Drawer, Button } from "antd";
 import Sidebar from "./Sidebar";
+import { useState } from "react";
+import { usePathname } from "next/navigation";
+import { MenuOutlined } from "@ant-design/icons";
 
-const { Sider, Content } = Layout;
-const { useBreakpoint } = Grid;
+const {  Content, Header, Footer } = Layout;
 
 export default function AppShell({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const screens = useBreakpoint();
-  const isSmallScreen = !screens.lg;
+  const pathname = usePathname();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const {
+    token: {  borderRadiusLG },
+  } = theme.useToken();
+
+  const breadcrumbItems = pathname
+    .split("/")
+    .filter(Boolean)
+    .map((segment) => ({ title: segment }));
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
-      <Sider
-        breakpoint="lg"
-        collapsedWidth={isSmallScreen ? 0 : 64}
-        width={220}
-        style={{ background: "transparent" }}
-      >
-        <div
-          style={{
-            height: 64,
-            display: "flex",
-            alignItems: "center",
-            paddingInline: 16,
-            fontWeight: 600,
-          }}
-        >
-          AI Review
-        </div>
-        <Sidebar />
-      </Sider>
       <Layout>
-        <Content style={{ padding: 16 }}>{children}</Content>
+        <Header
+          style={{ background: "#f6f8fa",paddingTop:'16px',paddingLeft:'0px' }}
+          className="sticky top-0 z-[1] w-full flex items-center align-center"
+        >
+          <div className="flex items-center gap-2 w-full">
+            <Button
+              type="text"
+              aria-label="打开菜单"
+              icon={<MenuOutlined />}
+              onClick={() => setMenuOpen(true)}
+              style={{ marginLeft: 8 }}
+            />
+            <Breadcrumb  items={breadcrumbItems} />
+          </div>
+        </Header>
+        <Drawer
+          title="菜单"
+          placement="left"
+          width={260}
+          open={menuOpen}
+          onClose={() => setMenuOpen(false)}
+        >
+          <Sidebar onNavigate={() => setMenuOpen(false)} />
+        </Drawer>
+        <Content style={{ background: "#fff", padding: "0 16px" }}>
+          <div
+            style={{
+              padding: 24,
+              minHeight: 360,
+              borderRadius: borderRadiusLG,
+            }}
+          >
+            {children}
+          </div>
+        </Content>
+        <Footer style={{ textAlign: "center", background: "#fff" }}>AI Review ©{new Date().getFullYear()}</Footer>
       </Layout>
     </Layout>
   );

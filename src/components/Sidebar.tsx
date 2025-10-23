@@ -18,14 +18,14 @@ function getSelectedKey(pathname: string): string {
   return "/";
 }
 
-export default function Sidebar() {
+export default function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
   const pathname = usePathname();
   const selectedKey = getSelectedKey(pathname);
 
   const items = useMemo<MenuProps["items"]>(() => {
     return [
       {
-        key: "/projects",
+        key: "/",
         icon: <AppstoreOutlined />,
         label: <Link href="/">项目</Link>,
       },
@@ -38,9 +38,14 @@ export default function Sidebar() {
     ];
   }, []);
 
+  const handleClick: MenuProps["onClick"] = () => {
+    if (onNavigate) onNavigate();
+  };
+
   return (
     <Menu
       mode="inline"
+      onClick={handleClick}
       selectedKeys={[selectedKey]}
       items={items}
       style={{ height: "100%", borderInlineEnd: 0 }}
