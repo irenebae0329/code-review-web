@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Card, Flex, Tooltip, Typography, Tag,App, Space, message } from "antd";
+import { Card, Flex, Tooltip, Typography, Tag,App, Space} from "antd";
 import type { Project } from "@/types/project";
 import dayjs from "dayjs";
 import { useRouter } from "next/navigation";
@@ -16,7 +16,7 @@ type ProjectCardProps = {
 
 export default function ProjectCard({ project }: ProjectCardProps) {
   const router = useRouter();
-  const { styles } = useProjectCardStyles();
+  const { styles } = useProjectCardStyles({ hasConfiged: project.hasConfiged ?? false });
 
 
   const { modal,message } = App.useApp();
@@ -35,7 +35,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
             </Typography.Text>
             <Space>
               <Typography.Text type="secondary">
-                {`webhook url: ${WEBHOOK_URL}`}
+                {`api url: ${WEBHOOK_URL}`}
               </Typography.Text>
               <CopyOutlined onClick={()=>{
                 navigator.clipboard.writeText(WEBHOOK_URL);
@@ -65,7 +65,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
       title={
         <Flex align="center" justify="space-between">
           <Flex align="center" gap={8} className={styles.headerLeft}>
-            <Tag color={project.hasConfiged ? "green" : "default"} className={styles.tagSpacing}>
+            <Tag className={styles.tag} >
               {project.hasConfiged ? "已配置" : "未配置"}
             </Tag>
             <Typography.Text strong className={styles.ellipsis}>

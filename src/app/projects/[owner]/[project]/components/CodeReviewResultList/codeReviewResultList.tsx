@@ -1,13 +1,14 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Avatar, Button, ConfigProvider, Flex, List, Space, Typography } from "antd";
+import { Avatar, Button, Flex, List, Space, Typography } from "antd";
 import dayjs from "dayjs";
 import type { CodeReviewResult } from "@prisma/client";
 import { fetchGithubAvatarByToken } from "@/lib/github";
 import { useSession } from "next-auth/react";
 import useCodeReviewResultListStyles from "./style";
 import { SecurityFinding } from "@/types/project";
+import Link from "next/link";
 
 
 type CodeReviewResultTableProps = {
@@ -58,7 +59,15 @@ export default function CodeReviewResultList({ data, loading, onRowClick }: Code
             <Avatar src={avatarUrl} className={avatar}/>
             <Typography.Text type="secondary">{`authored By: ${item.author} at ${dayjs(item.created_at).format('YYYY-MM-DD HH:mm:ss')}`}</Typography.Text>
             {item.branch && (
-              <Typography.Text type="secondary">{`on branch: ${item.branch}`}</Typography.Text>
+              <Typography.Text type="secondary">
+                <Link
+                  href={`https://github.com/${item.repo}/tree/${item.branch}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {`on branch: ${item.branch}`}
+                </Link>
+              </Typography.Text>
             )}
           </Space>
         </Space>

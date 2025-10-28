@@ -7,7 +7,7 @@ const useCodeReviewResultListStyles = createStyles(({ css, token }) => ({
   `,
   listItemContent: css`
     gap: ${token.paddingXXS}px;
-    min-width: 80%;
+    width: 80%;
   `,
   listItem: css`
     padding-left: ${token.padding}px !important;

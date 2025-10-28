@@ -32,6 +32,9 @@ export default function Providers({ children }: ProvidersProps) {
       Button:{
         defaultBorderColor:'#f6f8fa',
         colorPrimary:'hsla(0,0%,9%,1)',
+      },
+      Tag:{
+        colorSuccess:"#1f883d !important",
       }
     },
     }}>

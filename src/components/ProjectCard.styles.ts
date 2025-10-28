@@ -1,6 +1,6 @@
 import { createStyles } from 'antd-style';
 
-const useProjectCardStyles = createStyles(({ css, token }) => ({
+const useProjectCardStyles = createStyles(({ css, token },props: { hasConfiged: boolean }) => ({
   card: css`
     height: 200px;
   `,
@@ -15,9 +15,11 @@ const useProjectCardStyles = createStyles(({ css, token }) => ({
     white-space: nowrap;
   `,
 
-  tagSpacing: css`
+  tag: props.hasConfiged ? css`
     margin-right: ${token.marginXS}px;
-  `,
+    color: #1f883d !important;
+    border-color: #1f883d !important;
+  ` : "",
 
   icon: css`
     font-size: 18px;
