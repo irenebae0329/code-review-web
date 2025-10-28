@@ -17,7 +17,7 @@ export default function AppShell({
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const {
-    token: {  borderRadiusLG },
+    token: {  borderRadiusLG,colorPrimary },
   } = theme.useToken();
 
   const breadcrumbItems = pathname
@@ -52,16 +52,8 @@ export default function AppShell({
         >
           <Sidebar onNavigate={() => setMenuOpen(false)} />
         </Drawer>
-        <Content style={{ background: "#fff", padding: "0 16px" }}>
-          <div
-            style={{
-              padding: 24,
-              minHeight: 360,
-              borderRadius: borderRadiusLG,
-            }}
-          >
+        <Content style={{ background: "#fff", padding: "16px 16px",position:'relative' }}>
             {children}
-          </div>
         </Content>
         <Footer style={{ textAlign: "center", background: "#fff" }}>AI Review ©{new Date().getFullYear()}</Footer>
       </Layout>

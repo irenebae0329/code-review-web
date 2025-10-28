@@ -1,4 +1,5 @@
 
+import { CodeReviewResult } from "@prisma/client";
 export type Project = {
   id: string;
   name: string;
@@ -23,18 +24,21 @@ export type GitHubRepo = {
   link: string;
 };
 
-export type Commit = {
-  id: string;
-  message: string;
-  author: string;
-  committedAt: string; // ISO string
-  hash: string;
-  // optional status to color timeline nodes, e.g., success/failure
-  status?: "success" | "warning" | "error" | "processing" | "default";
-};
 
 
-export type Branch = {
-  id: string;
-  name: string;
+
+
+export type SecurityFinding = {
+  file: string;
+  line: number;
+  category: string;
+  severity: "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
+  confidence: number;
+  description: string;
+  recommendation: string;
+  exploit_scenario?: string;
+  _filter_metadata?: {
+    justification: string;
+    confidence_score: number;
+  };
 };
