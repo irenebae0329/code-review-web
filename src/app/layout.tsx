@@ -4,6 +4,7 @@ import "./globals.css";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import Providers from "./providers";
 import AppShell from "@/components/AppShell";
+import { App } from "antd";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,9 +31,11 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <AntdRegistry>
           <Providers>
-            <AppShell>
-              {children}
-            </AppShell>
+            <App>
+              <AppShell>
+                {children}
+              </AppShell>
+            </App>
           </Providers>
         </AntdRegistry>
       </body>

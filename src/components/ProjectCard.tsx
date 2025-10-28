@@ -1,12 +1,13 @@
 "use client";
 
 import React from "react";
-import { Card, Flex, Tooltip, Typography, Tag } from "antd";
+import { Card, Flex, Tooltip, Typography, Tag,App, Space, message } from "antd";
 import type { Project } from "@/types/project";
 import dayjs from "dayjs";
 import { useRouter } from "next/navigation";
-import { GithubOutlined, PlusCircleOutlined } from "@ant-design/icons";
+import { CopyOutlined, GithubOutlined, InfoCircleOutlined, PlusCircleOutlined } from "@ant-design/icons";
 import useProjectCardStyles from "./ProjectCard.styles";
+import { WEBHOOK_URL } from "./config";
 
 type ProjectCardProps = {
   project: Project;
@@ -16,10 +17,50 @@ type ProjectCardProps = {
 export default function ProjectCard({ project }: ProjectCardProps) {
   const router = useRouter();
   const { styles } = useProjectCardStyles();
+
+
+  const { modal,message } = App.useApp();
+  const handleCardClick = () => {
+    if (project.hasConfiged) {
+      router.push(`/projects/${project.owner}/${project.id}`);
+      return;
+    }
+    modal.info({
+      title: "添加项目",
+      content: (()=>{
+        return (
+          <Space direction="vertical">
+            <Typography.Text type="secondary">
+              请先配置 Webhook
+            </Typography.Text>
+            <Space>
+              <Typography.Text type="secondary">
+                {`webhook url: ${WEBHOOK_URL}`}
+              </Typography.Text>
+              <CopyOutlined onClick={()=>{
+                navigator.clipboard.writeText(WEBHOOK_URL);
+                message.success(`copied`);
+              }} />
+            </Space>
+          </Space>
+        )
+      })(),
+      okText: "配置 Webhook",
+      cancelText: "取消",
+      icon: <InfoCircleOutlined className={styles.icon} />,
+      onOk: () => {
+        window.open(project.webhookSettingsUrl || "", "_blank");
+      },
+      onCancel: () => {
+        return false;
+      }
+    })
+    
+  };
   return (
     <Card
       hoverable
-      onClick={() => router.push(`/projects/${project.owner}/${project.id}`)}
+      onClick={handleCardClick}
       className={styles.card}
       title={
         <Flex align="center" justify="space-between">

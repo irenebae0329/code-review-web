@@ -30,12 +30,9 @@ export default function Providers({ children }: ProvidersProps) {
         colorTextSecondary:'#59636e',
       },
       Button:{
-        defaultBorderColor:'#f6f8fa'
+        defaultBorderColor:'#f6f8fa',
+        colorPrimary:'hsla(0,0%,9%,1)',
       }
-    },
-    token:{
-      colorPrimary:'#f6f8fa',
-      colorIcon:'rgb(89, 99, 110)',
     },
     }}>
       <SessionProvider>

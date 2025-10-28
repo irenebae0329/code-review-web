@@ -57,6 +57,9 @@ export default function CodeReviewResultList({ data, loading, onRowClick }: Code
           <Space direction="horizontal" >
             <Avatar src={avatarUrl} className={avatar}/>
             <Typography.Text type="secondary">{`authored By: ${item.author} at ${dayjs(item.created_at).format('YYYY-MM-DD HH:mm:ss')}`}</Typography.Text>
+            {item.branch && (
+              <Typography.Text type="secondary">{`on branch: ${item.branch}`}</Typography.Text>
+            )}
           </Space>
         </Space>
         {parsedSecurityResult.length > 0 ?  <Button variant="outlined" className={buttonDanger}>risky</Button> : <Button variant="outlined" className={buttonSafe}>safe</Button>}

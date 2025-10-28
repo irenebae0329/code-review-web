@@ -21,7 +21,7 @@ const useProjectCardStyles = createStyles(({ css, token }) => ({
 
   icon: css`
     font-size: 18px;
-    color: ${token.colorTextSecondary};
+    color: ${token.colorTextSecondary} !important;
   `,
 
   content: css`
