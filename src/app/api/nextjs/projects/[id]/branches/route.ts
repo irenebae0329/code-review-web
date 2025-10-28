@@ -61,7 +61,6 @@ export async function POST(
   }
 
   const data = await res.json();
-  console.log(data);
   const branches = Array.isArray(data)
     ? data.map((b: Branch) => ({
         name: b.name,
